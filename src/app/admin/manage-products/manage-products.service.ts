@@ -31,10 +31,15 @@ export class ManageProductsService extends ApiService {
 
   private getPreSignedUrl(fileName: string): Observable<string> {
     const url = this.getUrl('import', 'import');
+    const authToken = localStorage.getItem('authorization_token');
+    const authorizationHeaderValue = 'Basic ' + authToken;
 
     return this.http.get(url, {
       params: {
         name: fileName,
+      },
+      headers: {
+        authorization: authorizationHeaderValue,
       },
       responseType: 'text',
     });
